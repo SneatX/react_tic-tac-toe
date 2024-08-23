@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import confetti from 'canvas-confetti'
 import '../css/Game.css'
 
@@ -25,33 +25,35 @@ export function Game() {
 
     let newBoard = [...board]
     newBoard[index] = turn
-    updateBoard(newBoard)
-
-    let possibleWinner = checkWinner(newBoard)
-    if(possibleWinner) {
-      newWinner(possibleWinner)
-      confetti()
-      return
-    }
-
-    let gameFinished = checkGameFinished(newBoard)
-    if(gameFinished) {
-      newWinner('=')
-    }
+    updateBoard(newBoard) //actualizar el tablero
 
     let newTurn = turn === players.X ? players.O : players.X
-    updateTurn(newTurn) 
-
-    saveGameToStorage(newBoard, newTurn)
+    updateTurn(newTurn) //actualizar el turno
   }
 
   const resetGame = () => {
     updateBoard(emptyArray)
     updateTurn(players.X)
     newWinner(null)
-
     resetGameInStorage()
   }
+
+  useEffect(()=>{
+    saveGameToStorage(board, turn)
+    let possibleWinner = checkWinner(board)
+    if(possibleWinner) {
+      newWinner(possibleWinner)
+      confetti()
+      return
+    }
+    else{
+      let gameFinished = checkGameFinished(board)
+      if(gameFinished) {
+        newWinner('=')
+        return
+      }
+    }
+  }, [board, turn])
 
   return (
     <main>
