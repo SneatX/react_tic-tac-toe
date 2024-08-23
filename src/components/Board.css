@@ -1,0 +1,23 @@
+main{
+    text-align: center;
+}
+
+.title{
+    margin-bottom: 50px;
+}
+
+.table{
+    display: grid;
+    grid-template-columns: repeat(3 ,1fr);
+    gap: 10px;
+}
+
+.turno{
+    margin-top: 50px;
+}
+
+.turno span{
+    color: aqua;
+    font-weight: bold;
+    font-size: 2em;
+}
