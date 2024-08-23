@@ -1,0 +1,41 @@
+main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+}
+
+.title{
+    margin-bottom: 50px;
+}
+
+.table{
+    display: grid;
+    grid-template-columns: repeat(3 ,1fr);
+    gap: 10px;
+}
+
+.turno{
+    margin-top: 50px;
+}
+
+.turno span{
+    color: aqua;
+    font-weight: bold;
+    font-size: 2em;
+}
+
+button{
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 2em;
+}
+
+button:hover{
+    background-color: #ffffff80;
+    cursor: pointer;
+}

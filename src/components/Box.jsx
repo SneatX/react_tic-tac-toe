@@ -1,6 +1,6 @@
-import "./Box.css"
+import "../css/Box.css"
 
-export default function Box({children, movement, index}){
+export function Box({children, movement, index}){
     return (
         <div className="box" onClick={()=>{movement(index)}}>
             {children}
