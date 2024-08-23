@@ -22,16 +22,26 @@ export default function Board() {
   const [board, updateBoard] = useState(emptyArray)
   const [turn, updateTurn] = useState(players.X)
   const [winner, newWinner] = useState()
+  const [title, letTitle] = useState()
 
   const checkWinner = (boardToCheck) =>{
     for(const possibility of possibleVictories){
       const [a, b, c] = possibility
 
-      //console.log(`a: ${boardToCheck[a]} b: ${boardToCheck[b]} c: ${boardToCheck[c]}`)
       if(boardToCheck[a] && boardToCheck[a] === boardToCheck[b] && boardToCheck[a] === boardToCheck[c]){
         return boardToCheck[a]
       }
     }
+  }
+
+  const checkGameFinished = (newBoard) =>{
+    let possibleFinish = true
+    for(let box of newBoard){
+      if(!box){
+        possibleFinish = false
+      }
+    }
+    return possibleFinish
   }
 
   const movement = (index) =>{
@@ -43,10 +53,19 @@ export default function Board() {
     updateBoard(newBoard)
 
     let possibleWinner = checkWinner(newBoard)
-    if(possibleWinner) newWinner(possibleWinner)
+    if(possibleWinner) {
+      newWinner(possibleWinner)
+      letTitle('Winner')
+    }
+
+    let gameFinished = checkGameFinished(newBoard)
+    if(gameFinished) {
+      newWinner('=')
+      letTitle('Draw')
+    }
     
     let nextPlayer = turn === players.X ? players.O : players.X
-    updateTurn(nextPlayer)
+    updateTurn(nextPlayer) 
   }
 
   return (
@@ -71,6 +90,20 @@ export default function Board() {
         <h2>Turn:</h2>
         <span>{turn}</span>
       </section>
+
+      {
+        winner != null && (
+          <section className='winner-background'>
+            <div className='winner-player'>
+              <h1>{title}!!</h1>
+              <span>{winner}</span>
+            </div>
+            <div className='tryAgain-section'>
+              <button>Try again</button>
+            </div>
+          </section>
+        )
+      }
     </main>
   )
 }
